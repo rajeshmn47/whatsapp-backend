@@ -1,8 +1,8 @@
 const Sequelize = require("sequelize");
 
-const username = "sql12598980";
-const password = "rHZ41rJBMZ";
-const database = "sql12598980";
+const username = "rajesh";
+const password = "uni1ver@se";
+const database = "whatsappbackend";
 
 const dbconfig = {
   host: "sql12.freemysqlhosting.net",
