@@ -1,4 +1,4 @@
-const User= require("../models/user");
+const User = require("../models/user");
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
@@ -32,10 +32,9 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   console.log(req.body, "req");
-  const user = await User.findOne({ name:  req.body.myform.username});
+  const user = await User.findOne({ name: req.body.myform.username });
   console.log(user._previousDataValues, "outside");
   if (user) {
-  
     if (user._previousDataValues.password == req.body.myform.password) {
       console.log(user._previousDataValues, "inside");
       var userid = user.id;
@@ -55,14 +54,14 @@ router.post("/login", async (req, res) => {
   }
 });
 router.get("/loaduser", checkloggedinuser, async function (req, res) {
-  console.log('loaduser',req.body.uidfromtoken )
-  const user = await User.findOne({ id: req.body.uidfromtoken  });
+  console.log("loaduser", req.body.uidfromtoken);
+  const user = await User.findOne({ id: req.body.uidfromtoken });
   res.status(200).json({
     message: user,
   });
 });
 
-router.get("/users",  async function (req, res) {
+router.get("/users", async function (req, res) {
   const users = await User.findAll();
   res.status(200).json({
     message: users,

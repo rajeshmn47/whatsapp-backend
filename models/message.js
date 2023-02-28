@@ -13,7 +13,12 @@ const Message = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
       field: "conversationid",
-    }
+    },
+    message: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      field: "message",
+    },
   },
   {
     timestamps: true,

@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const UserA = require("./models/user");
+const Conversation = require("./models/conversation");
+const Message = require("./models/message");
 const Lead = require("./models/list");
 const multer = require("multer");
 const dotenv = require("dotenv");
@@ -11,6 +13,7 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const leadsRoutes = require("./controllers");
 const auth = require("./controllerS/user");
+const message = require("./controllerS/messaging");
 const sequelize = require("./sequelize");
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -28,6 +31,7 @@ app.use(
 );
 
 app.use("/auth", auth);
+app.use("/conversation", message);
 sequelize
   .authenticate()
   .then(() => {
@@ -47,8 +51,8 @@ app.get("/createproduct", async (req, res) => {
   res.send("API running");
 });
 app.get("/findout", async (req, res) => {
-  const users=await UserA.findAll();
-  console.log(users,'user')
+  const users = await UserA.findAll();
+  console.log(users, "user");
   res.send(users);
 });
 

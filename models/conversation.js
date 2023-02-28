@@ -13,7 +13,11 @@ const Conversation = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
       field: "id",
-    }
+    },
+    members: {
+      type: Sequelize.ARRAY(Sequelize.STRING), // eslint-disable-line new-cap
+      allowNull: false,
+    },
   },
   {
     timestamps: true,
@@ -27,7 +31,7 @@ const Conversation = sequelize.define(
   }
 );
 sequelize
-  .sync()
+  .sync({ forced: true })
   .then(() => {
     console.log("Conversation table created successfully!");
   })
