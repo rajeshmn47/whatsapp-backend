@@ -4,8 +4,8 @@ const Sequelize = require("sequelize");
 /**
  * defintion for lead table
  */
-const Conversation = sequelize.define(
-  "conversation",
+const Konversation = sequelize.define(
+  "conversations",
   {
     id: {
       type: Sequelize.INTEGER,
@@ -15,8 +15,8 @@ const Conversation = sequelize.define(
       field: "id",
     },
     members: {
-      type: Sequelize.ARRAY(Sequelize.STRING), // eslint-disable-line new-cap
-      allowNull: false,
+      type: Sequelize.STRING,
+      field: "members",
     },
   },
   {
@@ -39,4 +39,4 @@ sequelize
     console.error("Unable to create table : ", error);
   });
 
-module.exports = Conversation;
+module.exports = Konversation;
