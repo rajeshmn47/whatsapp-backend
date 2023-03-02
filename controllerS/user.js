@@ -32,7 +32,9 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   console.log(req.body, "req");
-  const user = await User.findOne({ name: req.body.myform.username });
+  const user = await User.findOne({
+    where: { name: req.body.myform.username },
+  });
   console.log(user._previousDataValues, "outside");
   if (user) {
     if (user._previousDataValues.password == req.body.myform.password) {
@@ -55,7 +57,9 @@ router.post("/login", async (req, res) => {
 });
 router.get("/loaduser", checkloggedinuser, async function (req, res) {
   console.log("loaduser", req.body.uidfromtoken);
-  const user = await User.findOne({ id: req.body.uidfromtoken });
+  const user = await User.findOne({
+    where: { id: req.body.uidfromtoken },
+  });
   res.status(200).json({
     message: user,
   });

@@ -4,15 +4,15 @@ const Sequelize = require("sequelize");
 /**
  * defintion for lead table
  */
-const Message = sequelize.define(
-  "message",
+const Massage = sequelize.define(
+  "messagesra",
   {
     id: {
       type: Sequelize.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
-      field: "conversationid",
+      field: "id",
     },
     conversationid: {
       type: Sequelize.STRING,
@@ -22,6 +22,11 @@ const Message = sequelize.define(
       type: Sequelize.STRING,
       allowNull: false,
       field: "message",
+    },
+    senderid: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      field: "senderid",
     },
   },
   {
@@ -44,4 +49,4 @@ sequelize
     console.error("Unable to create table : ", error);
   });
 
-module.exports = Message;
+module.exports = Massage;
