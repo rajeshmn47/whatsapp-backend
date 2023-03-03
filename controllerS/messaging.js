@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const Massage = require("../models/messages");
 const router = express.Router();
 const activatekey = "accountactivatekey123";
+const { Op } = require("sequelize");
 
 router.get("/getconversation/:id/:otherid", async (req, res) => {
   console.log(req.params, "reqparams");
@@ -37,18 +38,12 @@ router.get("/getconversation/:id/:otherid", async (req, res) => {
 router.get("/getmessages/:id", async (req, res) => {
   console.log(req.params, "reqparams");
   const messages = await Massage.findAll({
-    $or: [
-      {
-        conversationid: {
-          $eq: req.params.id,
-        },
-      },
-      {
-        conversationid: {
-          $eq: req.params.id.split("").reverse().join(""),
-        },
-      },
-    ],
+    where: {
+      [Op.or]: [
+        { conversationid: req.params.id },
+        { conversationid: req.params.id.split("").reverse().join("") },
+      ],
+    },
   });
   console.log(messages, "conversation");
   try {
