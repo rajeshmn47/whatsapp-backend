@@ -3,6 +3,7 @@ const Konversation = require("../models/conversations");
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const Massage = require("../models/messages");
+const allUsers = require("../socket");
 const router = express.Router();
 const activatekey = "accountactivatekey123";
 const { Op } = require("sequelize");
@@ -80,6 +81,14 @@ router.post("/savemessage", async (req, res) => {
       message: "no user exists",
     });
   }
+});
+
+router.get("/onlinestatus/:id", async (req, res) => {
+  console.log(req.params, "reqparams");
+  console.log(allUsers, "99");
+  res.status(200).json({
+    message: "no user exists",
+  });
 });
 
 module.exports = router;

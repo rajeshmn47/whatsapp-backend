@@ -5,7 +5,7 @@ const Sequelize = require("sequelize");
  * defintion for lead table
  */
 const Massage = sequelize.define(
-  "messagesra",
+  "messagesro",
   {
     id: {
       type: Sequelize.INTEGER,
@@ -22,6 +22,12 @@ const Massage = sequelize.define(
       type: Sequelize.STRING,
       allowNull: false,
       field: "message",
+    },
+    is_seen: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+      allowNull: false,
+      field: "is_seen",
     },
     senderid: {
       type: Sequelize.STRING,

@@ -26,6 +26,7 @@ app.use(
       "http://127.0.0.1:3000/",
       "http://127.0.0.1:3001",
       "http://localhost:3000",
+      "http://localhost:8000",
     ],
   })
 );
@@ -73,7 +74,7 @@ app.post("/client/upload", upload.single("file"), (req, res) => {
     console.error(error);
   }
 });
-const PORT = process.env.PORT || 9000;
-app.listen(PORT, () => {
+const PORT = 9000;
+app.listen(9000, () => {
   console.warn(`App listening on http://localhost:${PORT}`);
 });

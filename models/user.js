@@ -5,7 +5,7 @@ const Sequelize = require("sequelize");
  * defintion for lead table
  */
 const User = sequelize.define(
-  "user",
+  "usera",
   {
     id: {
       type: Sequelize.INTEGER,
@@ -44,6 +44,11 @@ const User = sequelize.define(
       type: Sequelize.STRING,
       allowNull: true,
       field: "profilephoto",
+    },
+    last_seen: {
+      type: Sequelize.DATE,
+      allowNull: true,
+      field: "last_seen",
     },
   },
   {
