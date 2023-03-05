@@ -72,4 +72,31 @@ router.get("/users", async function (req, res) {
   });
 });
 
+router.post("/editname", async (req, res) => {
+  console.log(req.body, "req");
+  const user = await User.findOne({
+    where: { id: `${req.body.id}` },
+  });
+  await user.update({ name: req.body.name });
+  res.status(200).json(user);
+});
+
+router.post("/editabout", async (req, res) => {
+  console.log(req.body, "req");
+  const user = await User.findOne({
+    where: { id: `${req.body.id}` },
+  });
+  await user.update({ about: req.body.about });
+  res.status(200).json(user);
+});
+
+router.post("/editphoto", async (req, res) => {
+  console.log(req.body, "req");
+  const user = await User.findOne({
+    where: { id: `${req.body.id}` },
+  });
+  await user.update({ profilephoto: req.body.profilephoto });
+  res.status(200).json(user);
+});
+
 module.exports = router;

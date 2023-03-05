@@ -15,6 +15,7 @@ const leadsRoutes = require("./controllers");
 const auth = require("./controllerS/user");
 const message = require("./controllerS/messaging");
 const sequelize = require("./sequelize");
+const User = require("./models/user");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -42,7 +43,9 @@ sequelize
     console.error("Unable to connect to the database: ", error);
   });
 app.get("/", async (req, res) => {
-  res.send("API running successfully");
+  const users = await User.findAll();
+
+  res.send(users);
 });
 
 app.get("/pushcategories", async (req, res) => {

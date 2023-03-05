@@ -93,5 +93,3 @@ io.on("connection", (socket) => {
     console.log("disconnected", allUsers, socket.id);
   });
 });
-
-module.exports = allUsers;
