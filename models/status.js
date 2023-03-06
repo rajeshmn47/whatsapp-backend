@@ -14,26 +14,26 @@ const Status = sequelize.define(
       autoIncrement: true,
       field: "id",
     },
-    name: {
+    posted_by: {
       type: Sequelize.STRING,
       allowNull: false,
       unique: true,
-      field: "name",
+      field: "posted_by",
     },
-    dateofbirth: {
-      type: Sequelize.DATE,
-      allowNull: true,
-      field: "dateof_birth",
-    },
-    country: {
+    url: {
       type: Sequelize.STRING,
       allowNull: true,
-      field: "country",
+      field: "url",
     },
-    resume: {
+    seen_by: {
       type: Sequelize.STRING,
       allowNull: true,
-      field: "resume",
+      field: "seen_by",
+    },
+    r: {
+      type: Sequelize.STRING,
+      allowNull: true,
+      field: "",
     },
   },
   {
