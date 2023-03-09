@@ -14,6 +14,7 @@ const morgan = require("morgan");
 const leadsRoutes = require("./controllers");
 const auth = require("./controllerS/user");
 const message = require("./controllerS/messaging");
+const status = require("./controllerS/status");
 const sequelize = require("./sequelize");
 const User = require("./models/user");
 
@@ -27,6 +28,7 @@ app.use(
       "http://127.0.0.1:3000/",
       "http://127.0.0.1:3001",
       "http://localhost:3000",
+      "http://localhost:3001",
       "http://localhost:8000",
     ],
   })
@@ -34,6 +36,7 @@ app.use(
 
 app.use("/auth", auth);
 app.use("/conversation", message);
+app.use("/status", status);
 sequelize
   .authenticate()
   .then(() => {

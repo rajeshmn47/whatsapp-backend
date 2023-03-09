@@ -37,7 +37,7 @@ router.get("/getconversation/:id/:otherid", async (req, res) => {
 });
 
 router.get("/getmessages/:id", async (req, res) => {
-  console.log(req.params, "reqparams");
+  console.log(req.params, "reqparam");
   const messages = await Massage.findAll({
     where: {
       [Op.or]: [
