@@ -5,7 +5,7 @@ const Sequelize = require("sequelize");
  * defintion for lead table
  */
 const Status = sequelize.define(
-  "status",
+  "statuses",
   {
     id: {
       type: Sequelize.INTEGER,
@@ -17,7 +17,7 @@ const Status = sequelize.define(
     posted_by: {
       type: Sequelize.STRING,
       allowNull: false,
-      unique: true,
+      unique: false,
       field: "posted_by",
     },
     url: {
@@ -33,7 +33,7 @@ const Status = sequelize.define(
     r: {
       type: Sequelize.STRING,
       allowNull: true,
-      field: "",
+      field: "r",
     },
   },
   {

@@ -72,6 +72,17 @@ router.get("/users", async function (req, res) {
   });
 });
 
+router.get("/getuser/:id", async function (req, res) {
+  const user = await User.findOne({
+    where: {
+      id: req.params.id,
+    },
+  });
+  res.status(200).json({
+    data: user,
+  });
+});
+
 router.post("/editname", async (req, res) => {
   console.log(req.body, "req");
   const user = await User.findOne({
