@@ -52,6 +52,7 @@ router.get("/seenstatus/:id/:userid", async function (req, res) {
   console.log(req.params, status, "reqparams");
   let users = [];
   let seen = status.seen_by.split("+");
+  console.log(seen, "seen");
   for (let i = 0; i < seen.length; i++) {
     users.push(seen[i].split("user")[1]);
   }
@@ -59,7 +60,7 @@ router.get("/seenstatus/:id/:userid", async function (req, res) {
   console.log(found, "found");
   if (!found) {
     await status.update({
-      seen_by: ``,
+      seen_by: `user${req.params.userid}+${status.seen_by}`,
     });
   }
   res.status(200).json({
