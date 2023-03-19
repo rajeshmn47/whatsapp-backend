@@ -34,6 +34,12 @@ const Massage = sequelize.define(
       allowNull: false,
       field: "senderid",
     },
+    is_seen: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+      field: "is_seen",
+    },
   },
   {
     timestamps: true,

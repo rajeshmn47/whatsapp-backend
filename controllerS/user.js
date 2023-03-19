@@ -57,7 +57,7 @@ router.post("/login", async (req, res) => {
 });
 router.get("/loaduser", checkloggedinuser, async function (req, res) {
   console.log("loaduser", req.body.uidfromtoken);
-  const user = await User.findOne({
+  const user = await User.scope("withoutPassword").findOne({
     where: { id: req.body.uidfromtoken },
   });
   res.status(200).json({
@@ -66,14 +66,14 @@ router.get("/loaduser", checkloggedinuser, async function (req, res) {
 });
 
 router.get("/users", async function (req, res) {
-  const users = await User.findAll();
+  const users = await User.scope("withoutPassword").findAll();
   res.status(200).json({
     message: users,
   });
 });
 
 router.get("/getuser/:id", async function (req, res) {
-  const user = await User.findOne({
+  const user = await User.scope("withoutPassword").findOne({
     where: {
       id: req.params.id,
     },
@@ -94,10 +94,10 @@ router.post("/editname", async (req, res) => {
 
 router.post("/editabout", async (req, res) => {
   console.log(req.body, "req");
-  const user = await User.findOne({
+  const user = await User.scope("withoutPassword").findOne({
     where: { id: `${req.body.id}` },
   });
-  await user.update({ about: req.body.about });
+  await user.scope("withoutPassword").update({ about: req.body.about });
   res.status(200).json(user);
 });
 

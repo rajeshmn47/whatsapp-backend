@@ -36,6 +36,31 @@ router.get("/getconversation/:id/:otherid", async (req, res) => {
   }
 });
 
+router.get("/latestmessages/:id", async (req, res) => {
+  console.log(req.params, "reqparam");
+  const messages = await Massage.findAll({
+    where: {
+      [Op.or]: [
+        { conversationid: req.params.id },
+        { conversationid: req.params.id.split("").reverse().join("") },
+      ],
+    },
+  });
+  console.log(messages, "conversation");
+  try {
+    if (messages) {
+      res.status(200).json({
+        message: "success",
+        messages: messages,
+      });
+    }
+  } catch {
+    res.status(200).json({
+      message: "no user exists",
+    });
+  }
+});
+
 router.get("/getmessages/:id", async (req, res) => {
   console.log(req.params, "reqparam");
   const messages = await Massage.findAll({
@@ -47,6 +72,9 @@ router.get("/getmessages/:id", async (req, res) => {
     },
   });
   console.log(messages, "conversation");
+  messages.forEach(async (e) => {
+    await e.update({ is_seen: true }, { where: { id: e.id } });
+  });
   try {
     if (messages) {
       res.status(200).json({
@@ -85,7 +113,7 @@ router.post("/savemessage", async (req, res) => {
 
 router.get("/onlinestatus/:id", async (req, res) => {
   console.log(req.params, "reqparams");
-  console.log(allUsers, "99");
+  console.log("allUsers", "99");
   res.status(200).json({
     message: "no user exists",
   });

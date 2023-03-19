@@ -23,6 +23,12 @@ const Message = sequelize.define(
       allowNull: false,
       field: "message",
     },
+    is_seen: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+      field: "is_seen",
+    },
   },
   {
     timestamps: true,

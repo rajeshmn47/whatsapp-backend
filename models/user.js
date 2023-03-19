@@ -53,6 +53,11 @@ const User = sequelize.define(
   },
   {
     timestamps: true,
+    scopes: {
+      withoutPassword: {
+        attributes: { exclude: ["password"] },
+      },
+    },
     // don't delete database entries but set the newly added attribute deletedAt
     paranoid: true,
     underscored: true,
