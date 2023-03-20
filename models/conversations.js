@@ -5,7 +5,7 @@ const Sequelize = require("sequelize");
  * defintion for lead table
  */
 const Konversation = sequelize.define(
-  "conversations",
+  "conversationse",
   {
     id: {
       type: Sequelize.INTEGER,
@@ -17,6 +17,16 @@ const Konversation = sequelize.define(
     members: {
       type: Sequelize.STRING,
       field: "members",
+    },
+    memberone: {
+      type: Sequelize.STRING,
+      field: "memberone",
+      allowNull: true,
+    },
+    membertwo: {
+      type: Sequelize.STRING,
+      field: "membertwo",
+      allowNull: true,
     },
   },
   {

@@ -23,6 +23,8 @@ router.get("/getconversation/:id/:otherid", async (req, res) => {
     } else {
       const u = await Konversation.create({
         members: `${req.params.id}+${req.params.otherid}`,
+        memberone: `${req.params.id}`,
+        membertwo: `${req.params.otherid}`,
       });
       res.status(200).json({
         message: "success",
@@ -39,7 +41,9 @@ router.get("/getconversation/:id/:otherid", async (req, res) => {
 router.get("/getconversations/:id", async (req, res) => {
   console.log(req.params, "reqparams");
   const user = await Konversation.findAll({
-    where: { members: `${req.params.id}` },
+    where: {
+      [Op.or]: [{ memberone: req.params.id }, { membertwo: req.params.id }],
+    },
   });
   console.log(user, "conversation");
   try {
