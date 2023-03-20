@@ -36,6 +36,26 @@ router.get("/getconversation/:id/:otherid", async (req, res) => {
   }
 });
 
+router.get("/getconversations/:id", async (req, res) => {
+  console.log(req.params, "reqparams");
+  const user = await Konversation.findAll({
+    where: { members: `${req.params.id}` },
+  });
+  console.log(user, "conversation");
+  try {
+    if (user) {
+      res.status(200).json({
+        message: "success",
+        user: user,
+      });
+    }
+  } catch {
+    res.status(200).json({
+      message: "no user exists",
+    });
+  }
+});
+
 router.get("/latestmessages/:id", async (req, res) => {
   console.log(req.params, "reqparam");
   const messages = await Massage.findAll({
