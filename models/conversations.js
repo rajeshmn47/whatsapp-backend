@@ -5,7 +5,7 @@ const Sequelize = require("sequelize");
  * defintion for lead table
  */
 const Konversation = sequelize.define(
-  "conversationse",
+  "conversationzes",
   {
     id: {
       type: Sequelize.INTEGER,

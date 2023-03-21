@@ -94,10 +94,10 @@ router.post("/editname", async (req, res) => {
 
 router.post("/editabout", async (req, res) => {
   console.log(req.body, "req");
-  const user = await User.scope("withoutPassword").findOne({
+  const user = await User.findOne({
     where: { id: `${req.body.id}` },
   });
-  await user.scope("withoutPassword").update({ about: req.body.about });
+  await user.update({ about: req.body.about });
   res.status(200).json(user);
 });
 

@@ -5,7 +5,7 @@ const Sequelize = require("sequelize");
  * defintion for lead table
  */
 const Massage = sequelize.define(
-  "messagesrot",
+  "messageze",
   {
     id: {
       type: Sequelize.INTEGER,

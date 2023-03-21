@@ -11,7 +11,12 @@ const { Op } = require("sequelize");
 router.get("/getconversation/:id/:otherid", async (req, res) => {
   console.log(req.params, "reqparams");
   const user = await Konversation.findOne({
-    where: { members: `${req.params.id}+${req.params.otherid}` },
+    where: {
+      [Op.or]: [
+        { members: `${req.params.id}+${req.params.otherid}` },
+        { members: `${req.params.otherid}+${req.params.id}` },
+      ],
+    },
   });
   console.log(user, "conversation");
   try {
@@ -40,17 +45,34 @@ router.get("/getconversation/:id/:otherid", async (req, res) => {
 
 router.get("/getconversations/:id", async (req, res) => {
   console.log(req.params, "reqparams");
-  const user = await Konversation.findAll({
+  const conversations = await Konversation.findAll({
     where: {
       [Op.or]: [{ memberone: req.params.id }, { membertwo: req.params.id }],
     },
   });
-  console.log(user, "conversation");
+  console.log(conversations, "conversation");
+  for (let i = 0; i < conversations.length; i++) {
+    const messages = await Massage.findAll({
+      where: {
+        [Op.or]: [
+          { conversationid: conversations[i].members },
+          {
+            conversationid: conversations[i].members
+              .split("")
+              .reverse()
+              .join(""),
+          },
+        ],
+      },
+    });
+    const filtered = messages.filter((m) => m.is_seen == false);
+    conversations[i] = { ...conversations[i].dataValues, newmessage: filtered };
+  }
   try {
-    if (user) {
+    if (conversations) {
       res.status(200).json({
         message: "success",
-        user: user,
+        user: conversations,
       });
     }
   } catch {
@@ -85,7 +107,7 @@ router.get("/latestmessages/:id", async (req, res) => {
   }
 });
 
-router.get("/getmessages/:id", async (req, res) => {
+router.get("/getmessages/:id/:userid", async (req, res) => {
   console.log(req.params, "reqparam");
   const messages = await Massage.findAll({
     where: {
@@ -97,7 +119,9 @@ router.get("/getmessages/:id", async (req, res) => {
   });
   console.log(messages, "conversation");
   messages.forEach(async (e) => {
-    await e.update({ is_seen: true }, { where: { id: e.id } });
+    if ((e.senderid = !req.params.userid)) {
+      await e.update({ is_seen: true }, { where: { id: e.id } });
+    }
   });
   try {
     if (messages) {
