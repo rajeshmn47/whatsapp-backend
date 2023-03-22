@@ -18,7 +18,6 @@ router.get("/getconversation/:id/:otherid", async (req, res) => {
       ],
     },
   });
-  console.log(user, "conversation");
   try {
     if (user) {
       res.status(200).json({
@@ -50,7 +49,6 @@ router.get("/getconversations/:id", async (req, res) => {
       [Op.or]: [{ memberone: req.params.id }, { membertwo: req.params.id }],
     },
   });
-  console.log(conversations, "conversation");
   for (let i = 0; i < conversations.length; i++) {
     const messages = await Massage.findAll({
       where: {
@@ -92,7 +90,6 @@ router.get("/latestmessages/:id", async (req, res) => {
       ],
     },
   });
-  console.log(messages, "conversation");
   try {
     if (messages) {
       res.status(200).json({
@@ -108,7 +105,7 @@ router.get("/latestmessages/:id", async (req, res) => {
 });
 
 router.get("/getmessages/:id/:userid", async (req, res) => {
-  console.log(req.params, "reqparam");
+  console.log(req.params, "beingseen");
   const messages = await Massage.findAll({
     where: {
       [Op.or]: [
@@ -117,11 +114,13 @@ router.get("/getmessages/:id/:userid", async (req, res) => {
       ],
     },
   });
-  console.log(messages, "conversation");
   messages.forEach(async (e) => {
-    if ((e.senderid = !req.params.userid)) {
+    console.log(e.senderid, "seen");
+    if ((e.senderid != (req.params.userid))) {
+      console.log(e.senderid, "queen");
       await e.update({ is_seen: true }, { where: { id: e.id } });
     }
+return e;
   });
   try {
     if (messages) {
@@ -138,13 +137,12 @@ router.get("/getmessages/:id/:userid", async (req, res) => {
 });
 
 router.post("/savemessage", async (req, res) => {
-  console.log(req.params, "reqparams");
+  console.log(req.body.senderid, "reqparams");
   const messages = await Massage.create({
     conversationid: req.body.conversationid,
     message: req.body.message,
     senderid: req.body.senderid,
   });
-  console.log(messages, "conversation");
   try {
     if (messages) {
       res.status(200).json({
