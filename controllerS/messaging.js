@@ -63,7 +63,7 @@ router.get("/getconversations/:id", async (req, res) => {
         ],
       },
     });
-    const filtered = messages.filter((m) => m.is_seen == false);
+    const filtered = messages;
     conversations[i] = { ...conversations[i].dataValues, newmessage: filtered };
   }
   try {
@@ -116,11 +116,11 @@ router.get("/getmessages/:id/:userid", async (req, res) => {
   });
   messages.forEach(async (e) => {
     console.log(e.senderid, "seen");
-    if ((e.senderid != (req.params.userid))) {
+    if (e.senderid != req.params.userid) {
       console.log(e.senderid, "queen");
       await e.update({ is_seen: true }, { where: { id: e.id } });
     }
-return e;
+    return e;
   });
   try {
     if (messages) {
