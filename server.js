@@ -15,6 +15,7 @@ const leadsRoutes = require("./controllers");
 const auth = require("./controllerS/user");
 const message = require("./controllerS/messaging");
 const status = require("./controllerS/status");
+const video = require("./controllerS/video");
 const sequelize = require("./sequelize");
 const User = require("./models/user");
 
@@ -37,6 +38,7 @@ app.use(
 app.use("/auth", auth);
 app.use("/conversation", message);
 app.use("/status", status);
+app.use("/video", video);
 sequelize
   .authenticate()
   .then(() => {

@@ -3,6 +3,7 @@ const app = express();
 const path = require("path");
 const cors = require("cors");
 const server = require("http").createServer(app);
+const User = require("./models/user");
 const io = require("socket.io")(server, {
   cors: {
     origin: "*",
@@ -88,8 +89,12 @@ io.on("connection", (socket) => {
   });
 
   // when the user disconnects.. perform this
-  socket.on("disconnect", () => {
+  socket.on("disconnect", async () => {
+    u = allUsers.find((a) => a.id == socket.id && a.userid);
+    if (u?.userid) {
+      console.log("disconnected", u);
+      await User.update({ last_seen: new Date() }, { where: { id: u.userid } });
+    }
     allUsers = allUsers.filter((a) => !(a.id == socket.id));
-    console.log("disconnected", allUsers, socket.id);
   });
 });
