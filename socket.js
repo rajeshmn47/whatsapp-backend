@@ -75,10 +75,15 @@ io.on("connection", (socket) => {
   });
 
   // when the client emits 'typing', we broadcast it to others
-  socket.on("typing", () => {
-    socket.broadcast.emit("typing", {
-      username: socket.username,
-    });
+  socket.on("typing", (data) => {
+    console.log(data);
+    u = allUsers.find((a) => a.userid == data.recieverid);
+    console.log(u, "user");
+    if (u) {
+      socket.to(u?.id).emit("typing", {
+        userid: data.userid,
+      });
+    }
   });
 
   // when the client emits 'stop typing', we broadcast it to others
