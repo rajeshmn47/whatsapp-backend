@@ -4,6 +4,8 @@ const path = require("path");
 const cors = require("cors");
 const server = require("http").createServer(app);
 const User = require("./models/user");
+
+
 const io = require("socket.io")(server, {
   cors: {
     origin: "*",
@@ -55,11 +57,9 @@ io.on("connection", (socket) => {
 
   // when the client emits 'add user', this listens and executes
   socket.on("add user", (data) => {
-    console.log(data);
     if (addedUser) return;
     allUsers = allUsers.filter((a) => !(a.userid == data.userid));
     allUsers.push({ id: socket.id, userid: data.userid });
-    console.log(allUsers);
     // we store the username in the socket session for this client
     socket.username = "username";
     ++numUsers;
@@ -76,9 +76,7 @@ io.on("connection", (socket) => {
 
   // when the client emits 'typing', we broadcast it to others
   socket.on("typing", (data) => {
-    console.log(data);
     u = allUsers.find((a) => a.userid == data.recieverid);
-    console.log(u, "user");
     if (u) {
       socket.to(u?.id).emit("typing", {
         userid: data.userid,
@@ -97,7 +95,6 @@ io.on("connection", (socket) => {
   socket.on("disconnect", async () => {
     u = allUsers.find((a) => a.id == socket.id && a.userid);
     if (u?.userid) {
-      console.log("disconnected", u);
       await User.update({ last_seen: new Date() }, { where: { id: u.userid } });
     }
     allUsers = allUsers.filter((a) => !(a.id == socket.id));

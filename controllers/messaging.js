@@ -1,16 +1,17 @@
-const User = require("../models/user");
-const Konversation = require("../models/conversations");
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const Massage = require("../models/messages");
-const allUsers = require("../socket");
-const router = express.Router();
 const activatekey = "accountactivatekey123";
 const { Op } = require("sequelize");
+const router = express.Router();
+const catchasyncerror = require('../catchasyncerrors')
+const Massage = require("../models/messages");
+const allUsers = require("../socket");
+const User = require("../models/user");
+const Konversation = require("../models/conversations");
+
 
 function checkloggedinuser(req, res, next) {
   const tokenheader = req.headers["servertoken"];
-  console.log(tokenheader, req.body, "headers");
   if (tokenheader) {
     jwt.verify(tokenheader, activatekey, function (err, decoded) {
       if (!err) {
@@ -19,7 +20,6 @@ function checkloggedinuser(req, res, next) {
       next();
     });
   } else {
-    console.log("jute");
     res.status(200).json({
       success: false,
     });
@@ -29,13 +29,8 @@ function checkloggedinuser(req, res, next) {
 router.get(
   "/getconversation/:id/:otherid",
   checkloggedinuser,
-  async (req, res) => {
+  catchasyncerror(async (req, res) => {
     if (req.body.uidfromtoken == req.params.otherid) {
-      console.log(
-        req.params.otherid == req.body.uidfromtoken,
-        "reqparams",
-        "egcvs"
-      );
       const user = await Konversation.findOne({
         where: {
           [Op.or]: [
@@ -72,11 +67,10 @@ router.get(
       });
     }
   }
-);
+));
 
 router.get("/getconversations/:id", checkloggedinuser, async (req, res) => {
   if (req.params.id == req.body.uidfromtoken) {
-    console.log(req.params, "reqparams");
     const conversations = await Konversation.findAll({
       where: {
         [Op.or]: [{ memberone: req.params.id }, { membertwo: req.params.id }],
@@ -123,7 +117,6 @@ router.get("/getconversations/:id", checkloggedinuser, async (req, res) => {
 
 router.get("/latestmessages/:id", checkloggedinuser, async (req, res) => {
   if (req.params.id == req.body.uidfromtoken) {
-    console.log(req.params, "reqparam");
     const messages = await Massage.findAll({
       where: {
         [Op.or]: [
@@ -152,7 +145,6 @@ router.get("/latestmessages/:id", checkloggedinuser, async (req, res) => {
 });
 
 router.get("/getmessages/:id/:userid", checkloggedinuser, async (req, res) => {
-  console.log(req.params, "beingseen");
   if (req.params.userid == req.body.uidfromtoken) {
     const messages = await Massage.findAll({
       where: {
@@ -163,9 +155,7 @@ router.get("/getmessages/:id/:userid", checkloggedinuser, async (req, res) => {
       },
     });
     messages.forEach(async (e) => {
-      console.log(e.senderid, "seen");
       if (e.senderid != req.params.userid) {
-        console.log(e.senderid, "queen");
         await e.update({ is_seen: true }, { where: { id: e.id } });
       }
       return e;
@@ -190,7 +180,6 @@ router.get("/getmessages/:id/:userid", checkloggedinuser, async (req, res) => {
 });
 
 router.post("/savemessage", checkloggedinuser, async (req, res) => {
-  console.log(req.body, "reqparams");
   if (req.body.senderid == req.body.uidfromtoken) {
     const messages = await Massage.create({
       conversationid: req.body.conversationid,
@@ -217,8 +206,6 @@ router.post("/savemessage", checkloggedinuser, async (req, res) => {
 });
 
 router.get("/onlinestatus/:id", checkloggedinuser, async (req, res) => {
-  console.log(req.params, "reqparams");
-  console.log("allUsers", "99");
   res.status(200).json({
     message: "no user exists",
   });

@@ -9,7 +9,6 @@ router.get("/", (req, res) => {
 });
 
 router.get("/videoplayer", (req, res) => {
-  console.log("hitting");
   const range = req.headers.range;
   const videoPath = path.join(__dirname, "../public/video.webm");
   const videoSize = fs.statSync(videoPath).size;

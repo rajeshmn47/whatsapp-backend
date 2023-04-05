@@ -1,8 +1,8 @@
-const User = require("../models/user");
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 const activatekey = "accountactivatekey123";
+const User = require("../models/user");
 
 function checkloggedinuser(req, res, next) {
   const tokenheader = req.body.headers || req.headers["servertoken"];
@@ -22,7 +22,6 @@ function checkloggedinuser(req, res, next) {
 }
 
 router.post("/register", async (req, res) => {
-  console.log(req.body, "req");
   const user = await User.create({
     name: req.body.myform.username,
     password: req.body.myform.password,
@@ -31,14 +30,11 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  console.log(req.body, "req");
   const user = await User.findOne({
     where: { name: req.body.myform.username },
   });
-  console.log(user._previousDataValues, "outside");
   if (user) {
     if (user._previousDataValues.password == req.body.myform.password) {
-      console.log(user._previousDataValues, "inside");
       var userid = user.id;
       const token = jwt.sign({ userid }, activatekey, {
         expiresIn: "50000000m",
@@ -56,7 +52,6 @@ router.post("/login", async (req, res) => {
   }
 });
 router.get("/loaduser", checkloggedinuser, async function (req, res) {
-  console.log("loaduser", req.body.uidfromtoken);
   const user = await User.scope("withoutPassword").findOne({
     where: { id: req.body.uidfromtoken },
   });
@@ -84,7 +79,6 @@ router.get("/getuser/:id", async function (req, res) {
 });
 
 router.post("/editname", async (req, res) => {
-  console.log(req.body, "req");
   const user = await User.findOne({
     where: { id: `${req.body.id}` },
   });
@@ -93,7 +87,6 @@ router.post("/editname", async (req, res) => {
 });
 
 router.post("/editabout", async (req, res) => {
-  console.log(req.body, "req");
   const user = await User.findOne({
     where: { id: `${req.body.id}` },
   });
@@ -102,7 +95,6 @@ router.post("/editabout", async (req, res) => {
 });
 
 router.post("/editphoto", async (req, res) => {
-  console.log(req.body, "req");
   const user = await User.findOne({
     where: { id: `${req.body.id}` },
   });
