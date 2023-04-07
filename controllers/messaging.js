@@ -3,12 +3,11 @@ const jwt = require("jsonwebtoken");
 const activatekey = "accountactivatekey123";
 const { Op } = require("sequelize");
 const router = express.Router();
-const catchasyncerror = require('../catchasyncerrors')
+const catchasyncerror = require("../catchasyncerrors");
 const Massage = require("../models/messages");
 const allUsers = require("../socket");
 const User = require("../models/user");
 const Konversation = require("../models/conversations");
-
 
 function checkloggedinuser(req, res, next) {
   const tokenheader = req.headers["servertoken"];
@@ -66,8 +65,8 @@ router.get(
         message: "no user exists",
       });
     }
-  }
-));
+  })
+);
 
 router.get("/getconversations/:id", checkloggedinuser, async (req, res) => {
   if (req.params.id == req.body.uidfromtoken) {

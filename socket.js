@@ -5,7 +5,6 @@ const cors = require("cors");
 const server = require("http").createServer(app);
 const User = require("./models/user");
 
-
 const io = require("socket.io")(server, {
   cors: {
     origin: "*",

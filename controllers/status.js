@@ -8,7 +8,6 @@ const allUsers = require("../socket");
 const User = require("../models/user");
 const Konversation = require("../models/conversations");
 
-
 router.post("/savestatus", async (req, res) => {
   const status = await Status.create({
     posted_by: req.body.postedby,
@@ -23,7 +22,7 @@ router.post("/savestatus", async (req, res) => {
     }
   } catch {
     res.status(200).json({
-      message: "no user exists",
+      message: "not saved",
     });
   }
 });
@@ -49,11 +48,16 @@ router.get("/seenstatus/:id/:userid", async function (req, res) {
     where: { id: `${req.params.id}` },
   });
   let users = [];
-  let seen = status.seen_by.split("+");
-  for (let i = 0; i < seen.length; i++) {
-    users.push(seen[i].split("user")[1]);
+  console.log(status.seen_by, "seen");
+  let seen;
+  if (!(status.seen_by == null)) {
+    seen = status.seen_by.split("+");
+    for (let i = 0; i < seen.length; i++) {
+      users.push(seen[i].split("user")[1]);
+    }
   }
   let found = users.find((u) => u == req.params.userid);
+
   if (!found) {
     await status.update({
       seen_by: `user${req.params.userid}+${status.seen_by}`,
