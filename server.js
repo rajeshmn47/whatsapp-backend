@@ -80,7 +80,7 @@ app.post("/client/upload", upload.single("file"), (req, res) => {
     console.error(error);
   }
 });
-const PORT = 9000;
+const PORT = process.env.PORT || 9000;
 app.listen(9000, () => {
   console.warn(`App listening on http://localhost:${PORT}`);
 });
