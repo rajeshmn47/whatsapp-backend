@@ -21,18 +21,7 @@ const User = require("./models/user");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(express.json());
-app.use(
-  cors({
-    origin: [
-      "https://addictivemediafrontend.vercel.app",
-      "http://127.0.0.1:3000/",
-      "http://127.0.0.1:3001",
-      "http://localhost:3000",
-      "http://localhost:3001",
-      "http://localhost:8000",
-    ],
-  })
-);
+app.use(cors({ origin: "*", credentials: false }));
 
 app.use("/auth", auth);
 app.use("/conversation", message);
