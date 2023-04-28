@@ -5,7 +5,6 @@ const { Op } = require("sequelize");
 const router = express.Router();
 const catchasyncerror = require("../catchasyncerrors");
 const Massage = require("../models/messages");
-const allUsers = require("../socket");
 const User = require("../models/user");
 const Konversation = require("../models/conversations");
 

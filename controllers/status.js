@@ -4,7 +4,6 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 const Status = require("../models/status");
-const allUsers = require("../socket");
 const User = require("../models/user");
 const Konversation = require("../models/conversations");
 
