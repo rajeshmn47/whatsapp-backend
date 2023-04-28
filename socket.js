@@ -10,7 +10,7 @@ const io = require("socket.io")(server, {
     origin: "*",
   },
 });
-const port = 4000;
+const port = 7000;
 
 server.listen(port, () => {
   console.log("Server listening at port %d", port);
