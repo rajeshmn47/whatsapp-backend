@@ -21,7 +21,11 @@ const User = require("./models/user");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(express.json());
-app.use(cors({ origin: "*", credentials: false }));
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 app.use("/auth", auth);
 app.use("/conversation", message);
