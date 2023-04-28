@@ -45,8 +45,15 @@ router.post("/login", async (req, res) => {
         user: user,
       });
     }
+    else {
+      console.log('no user')
+      res.status(400).json({
+        message: "no user exists",
+      });
+    }
   } else {
-    res.status(200).json({
+    console.log('no user')
+    res.status(400).json({
       message: "no user exists",
     });
   }
