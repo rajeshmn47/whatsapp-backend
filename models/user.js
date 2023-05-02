@@ -7,45 +7,45 @@ const User = sequelize.define(
   "usera",
   {
     id: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.INTEGER(126),
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
       field: "id",
     },
     name: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(126),
       allowNull: false,
       unique: true,
       field: "name",
     },
     dateofbirth: {
-      type: Sequelize.DATE,
+      type: Sequelize.DATE(126),
       allowNull: true,
       field: "dateof_birth",
     },
     password: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(126),
       allowNull: true,
       field: "password",
     },
     about: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(126),
       allowNull: true,
       field: "about",
     },
     phonenumber: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(126),
       allowNull: true,
       field: "phonenumber",
     },
     profilephoto: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(126),
       allowNull: true,
       field: "profilephoto",
     },
     last_seen: {
-      type: Sequelize.DATE,
+      type: Sequelize.DATE(126),
       allowNull: true,
       field: "last_seen",
     },

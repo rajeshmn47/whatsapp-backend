@@ -4,7 +4,7 @@ const sequelize = require("../sequelize");
  * defintion for lead table
  */
 const Massage = sequelize.define(
-  "messageze",
+  "messagezeu",
   {
     id: {
       type: Sequelize.INTEGER,
@@ -21,6 +21,9 @@ const Massage = sequelize.define(
       type: Sequelize.STRING,
       allowNull: false,
       field: "message",
+      get() {
+        return this.getDataValue("message").toString("utf8mb4");
+      },
     },
     is_seen: {
       type: Sequelize.BOOLEAN,
@@ -45,6 +48,7 @@ const Massage = sequelize.define(
     // don't delete database entries but set the newly added attribute deletedAt
     paranoid: true,
     underscored: true,
+    charset: "utf8mb4",
     createdAt: "created_at",
     updatedAt: "updated_at",
     deletedAt: "deleted_at",

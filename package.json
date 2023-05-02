@@ -11,7 +11,9 @@
     "multer": "^1.4.5-lts.1",
     "mysql2": "^2.3.3",
     "prettier": "^2.8.4",
+    "request": "^2.88.2",
     "sequelize": "^6.25.4",
+    "sequelize-auto-migrations-v2": "^1.2.1",
     "socket.io": "^4.6.1",
     "socket.io-client": "^4.6.1"
   }

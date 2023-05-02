@@ -42,12 +42,12 @@ router.get("/allstatus", async function (req, res) {
   date = new Date(date.getTime() - 24 * 60 * 60 * 1000);
   const statuses = await Status.findAll({
     where: {
-      'created_at': {
-        [Op.between]: [new Date(date),new Date(endDate)]
+      created_at: {
+        [Op.between]: [new Date(date), new Date(endDate)],
       },
     },
   });
-  console.log(statuses,'statuses')
+  console.log(statuses, "statuses");
   res.status(200).json({
     data: statuses,
   });

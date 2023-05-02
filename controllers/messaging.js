@@ -7,6 +7,7 @@ const catchasyncerror = require("../catchasyncerrors");
 const Massage = require("../models/messages");
 const User = require("../models/user");
 const Konversation = require("../models/conversations");
+const sequelize = require("../sequelize");
 
 function checkloggedinuser(req, res, next) {
   const tokenheader = req.headers["servertoken"];
@@ -144,6 +145,7 @@ router.get("/latestmessages/:id", checkloggedinuser, async (req, res) => {
 
 router.get("/getmessages/:id/:userid", checkloggedinuser, async (req, res) => {
   if (req.params.userid == req.body.uidfromtoken) {
+    await sequelize.query("SET CHARSET utf8mb4");
     const messages = await Massage.findAll({
       where: {
         [Op.or]: [
@@ -179,6 +181,7 @@ router.get("/getmessages/:id/:userid", checkloggedinuser, async (req, res) => {
 
 router.post("/savemessage", checkloggedinuser, async (req, res) => {
   if (req.body.senderid == req.body.uidfromtoken) {
+    await sequelize.query("SET CHARSET utf8mb4");
     const messages = await Massage.create({
       conversationid: req.body.conversationid,
       message: req.body.message,
@@ -186,6 +189,7 @@ router.post("/savemessage", checkloggedinuser, async (req, res) => {
     });
     try {
       if (messages) {
+        console.log(messages.message, "messageabcd");
         res.status(200).json({
           message: "success",
           messages: messages,

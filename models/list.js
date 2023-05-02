@@ -14,7 +14,7 @@ const Lead = sequelize.define(
       field: "id",
     },
     name: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(126),
       allowNull: false,
       unique: true,
       field: "name",
@@ -25,12 +25,12 @@ const Lead = sequelize.define(
       field: "dateof_birth",
     },
     country: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(126),
       allowNull: true,
       field: "country",
     },
     resume: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(126),
       allowNull: true,
       field: "resume",
     },

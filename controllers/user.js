@@ -44,15 +44,14 @@ router.post("/login", async (req, res) => {
         token: token,
         user: user,
       });
-    }
-    else {
-      console.log('no user')
+    } else {
+      console.log("no user");
       res.status(400).json({
         message: "no user exists",
       });
     }
   } else {
-    console.log('no user')
+    console.log("no user");
     res.status(400).json({
       message: "no user exists",
     });
